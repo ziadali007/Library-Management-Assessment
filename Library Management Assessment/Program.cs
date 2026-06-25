@@ -1,4 +1,10 @@
 
+using Domain.Models.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Presistence;
+
 namespace Library_Management_Assessment
 {
     public class Program
@@ -7,10 +13,18 @@ namespace Library_Management_Assessment
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            var identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
+            builder.Services.AddDbContext<LibraryIdentityDbContext>(options =>
+                                          options.UseSqlServer(identityConnectionString));
+            builder.Services.AddIdentity<AppUser, AppRole>(options => {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<LibraryIdentityDbContext>()
+            .AddDefaultTokenProviders();
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -25,6 +39,7 @@ namespace Library_Management_Assessment
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
