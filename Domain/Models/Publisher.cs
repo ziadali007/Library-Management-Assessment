@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class Publisher : BaseEntity
+    public class Publisher : BaseEntity, IHasName
     {
 
         public string Name { get; set; } = string.Empty;
