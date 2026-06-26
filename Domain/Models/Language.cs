@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class Language : BaseEntity
+    public class Language : BaseEntity, IHasName
     {
         public string Name { get; set; } = string.Empty;
 
