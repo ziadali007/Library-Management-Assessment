@@ -9,7 +9,7 @@ namespace Library_Management_Assessment
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +42,13 @@ namespace Library_Management_Assessment
             }
 
             app.UseHttpsRedirection();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                // Execute the async method safely
+                await IdentityDataSeeder.SeedPermanentAdminOnceAsync(services);
+            }
 
             app.UseAuthentication();
             app.UseAuthorization();
