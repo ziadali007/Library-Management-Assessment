@@ -24,6 +24,10 @@ namespace Library_Management_Assessment
             .AddEntityFrameworkStores<LibraryIdentityDbContext>()
             .AddDefaultTokenProviders();
 
+            var businessConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services.AddDbContext<LibraryDbContext>(options =>
+                                          options.UseSqlServer(businessConnectionString));
+
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
