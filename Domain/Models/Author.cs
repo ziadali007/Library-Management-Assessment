@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class Author
+    public class Author : BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
 
         public string? Biography { get; set; }
