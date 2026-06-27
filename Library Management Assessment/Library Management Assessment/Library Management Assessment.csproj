@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Presistence\Presistence.csproj" />
+    <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
 </Project>

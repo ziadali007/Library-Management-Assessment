@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstractions;
+using Shared;
 using Shared.Register_LoginDtos;
 using System;
 using System.Collections.Generic;
@@ -31,5 +32,21 @@ namespace Presentation
             return Ok(new { message = "User registered successfully as a Member." });
         }
 
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login([FromBody] LoginDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var token = await serviceManager.AuthService.LoginAsync(dto);
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return Unauthorized();
+            }
+
+            return Ok(new { token = token, expiration = DateTime.UtcNow.AddHours(3) });
+        }
     }
 }

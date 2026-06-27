@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace Presentation
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class BaseController(IServiceManager serviceManager) : ControllerBase
     {
         #region Books Shared Endpoints
