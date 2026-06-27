@@ -21,15 +21,25 @@ namespace Presistence.Repositories
         {
             return await _identityDb.Set<T>().AsNoTracking().ToListAsync();
         }
-
+        public IQueryable<T> AsQueryable()
+        {
+            return _identityDb.Set<T>();
+        }
 
         public async Task<T?> GetByIdAsync(int id)
         {
             return await _identityDb.Set<T>().FindAsync(id);
         }
-        public async Task<T> FindByNameAsync(string name)
+        public async Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
         {
-            return await _identityDb.Set<T>().FirstOrDefaultAsync(e => e.Name == name);
+            IQueryable<T> query = _identityDb.Set<T>();
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            return await query.Where(predicate).AsNoTracking().ToListAsync();
         }
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
         {

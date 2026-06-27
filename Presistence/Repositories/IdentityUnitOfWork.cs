@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Presistence.Repositories
 {
-    public class IdentityUnitOfWork : IUnitOfWork
+    public class IdentityUnitOfWork : IIdentityUnitOfWork
     {
         private readonly LibraryIdentityDbContext _identityDb;
         private readonly ConcurrentDictionary<Type, object> _repositories;
