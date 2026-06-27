@@ -2,6 +2,7 @@
 using Domain.Contracts;
 using Domain.Models.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Services.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class ServiceManager(UserManager<AppUser> _userManager, ILibraryUnitOfWork unitOfWork, IMapper mapper, RoleManager<AppRole> userRole) : IServiceManager
+    public class ServiceManager(UserManager<AppUser> _userManager, ILibraryUnitOfWork unitOfWork, IMapper mapper, RoleManager<AppRole> userRole, IConfiguration configuration) : IServiceManager
     {
         public IAdminService AdminService { get; } = new AdminService(_userManager);
 
@@ -25,6 +26,6 @@ namespace Services
 
         public ILanguageService LanguageService { get; } = new LanguageService(mapper, unitOfWork);
 
-        public IAuthService AuthService { get; } = new AuthService(_userManager, userRole);
+        public IAuthService AuthService { get; } = new AuthService(_userManager, userRole,configuration);
     }
 }
