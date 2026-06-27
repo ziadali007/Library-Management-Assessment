@@ -87,7 +87,7 @@ namespace Presentation
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var isUpdated = await serviceManager.BookService.UpdateBookAsync(dto.Id, dto);
+            var isUpdated = await serviceManager.BookService.UpdateBookAsync(dto);
 
             if (!isUpdated)
                 return NotFound($"Book record with ID {dto.Id} could not be found or updated.");
@@ -117,7 +117,151 @@ namespace Presentation
         }
         #endregion
 
+        #region Category management
 
+        [HttpPost("categories")]
+        public async Task<IActionResult> CreateCategory([FromBody] AddCategoryDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            await serviceManager.CategoryService.AddCategoryAsync(dto);
+            return Ok("Category added successfully.");
+        }
+
+        [HttpPut("categories")]
+        public async Task<IActionResult> UpdateCategory([FromBody] AddCategoryDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var isUpdated = await serviceManager.CategoryService.UpdateCategoryAsync(dto);
+            if (!isUpdated)
+                return NotFound($"Category record with ID {dto.Id} could not be found or updated.");
+            return Ok("Category updated successfully.");
+        }
+
+        [HttpDelete("categories/{id:int}")]
+        public async Task<IActionResult> DeleteCategory(int id)
+        {
+            var isDeleted = await serviceManager.CategoryService.DeleteCategoryAsync(id);
+            if (!isDeleted)
+                return NotFound($"Category record with ID {id} does not exist.");
+            return Ok("Category deleted successfully.");
+        }
+        #endregion
+
+        #region Author management
+
+        [HttpGet("authors/{id:int}")]
+        public async Task<ActionResult<AuthorResultDto>> GetAuthorById(int id)
+        {
+            var author = await serviceManager.AuthorService.GetAuthorByIdAsync(id);
+            if (author == null)
+                return NotFound($"Author record with ID {id} does not exist.");
+            return Ok(author);
+        }
+
+        [HttpPost("authors")]
+        public async Task<IActionResult> CreateAuthor([FromBody] AddAuthorDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result=await serviceManager.AuthorService.AddAuthorAsync(dto);
+            return Ok(result);
+        }
+
+        [HttpPut("authors")]
+        public async Task<IActionResult> UpdateAuthor([FromBody] AddAuthorDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var isUpdated = await serviceManager.AuthorService.UpdateAuthorAsync(dto);
+            if (isUpdated is null)
+                return NotFound($"Author record with ID {dto.Id} could not be found or updated.");
+            return Ok(isUpdated);
+        }
+
+        [HttpDelete("authors/{id:int}")]
+        public async Task<IActionResult> DeleteAuthor(int id)
+        {
+            var isDeleted = await serviceManager.AuthorService.DeleteAuthorAsync(id);
+            if (!isDeleted)
+                return NotFound($"Author record with ID {id} does not exist.");
+            return Ok("Author deleted successfully.");
+        }
+
+
+        #endregion
+
+        #region Publisher management
+        [HttpGet("users/{id:int}")]
+        public async Task<ActionResult<AuthorResultDto>> GetUserById(int id)
+        {
+            var user = await serviceManager.PublisherService.GetPublisherByIdAsync(id);
+            if (user == null)
+                return NotFound($"User record with ID {id} does not exist.");
+            return Ok(user);
+        }
+
+        [HttpPost("Publishers")]
+        public async Task<IActionResult> CreatePublisher([FromBody] AddPublisherDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await serviceManager.PublisherService.AddPublisherAsync(dto);
+            return Ok(result);
+        }
+
+        [HttpPut("Publishers")]
+        public async Task<IActionResult> UpdatePublisher([FromBody] AddPublisherDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var isUpdated = await serviceManager.PublisherService.UpdatePublisherAsync(dto);
+            if (isUpdated is null)
+                return NotFound($"Publisher record with ID {dto.Id} could not be found or updated.");
+            return Ok(isUpdated);
+        }
+        #endregion
+
+        #region Language management
+        [HttpGet("languages/{id:int}")]
+        public async Task<ActionResult<LanguageResultDto>> GetLanguageById(int id)
+        {
+            var language = await serviceManager.LanguageService.GetLanguageByIdAsync(id);
+            if (language == null)
+                return NotFound($"Language record with ID {id} does not exist.");
+            return Ok(language);
+        }
+
+        [HttpPost("languages")]
+        public async Task<IActionResult> CreateLanguage([FromBody] AddLanguageDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var lang=await serviceManager.LanguageService.AddLanguageAsync(dto);
+            return Ok(lang);
+        }
+
+        [HttpPut("languages")]
+        public async Task<IActionResult> UpdateLanguage([FromBody] AddLanguageDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var isUpdated = await serviceManager.LanguageService.UpdateLanguageAsync(dto);
+            if (isUpdated is null)
+                return NotFound($"Language record with ID {dto.Id} could not be found or updated.");
+            return Ok(isUpdated);
+        }
+
+        [HttpDelete("languages/{id:int}")]
+        public async Task<IActionResult> DeleteLanguage(int id)
+        {
+            var isDeleted = await serviceManager.LanguageService.DeleteLanguageAsync(id);
+            if (!isDeleted)
+                return NotFound($"Language record with ID {id} does not exist.");
+            return Ok("Language deleted successfully.");
+        }
+        #endregion
 
     }
 }

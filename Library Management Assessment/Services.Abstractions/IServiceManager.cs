@@ -11,5 +11,13 @@ namespace Services.Abstractions
         IAdminService AdminService { get; }
 
         IBookService BookService { get; }
+
+        ICategoryService CategoryService { get; }
+
+        IAuthorService AuthorService { get; }
+
+        IPublisherService PublisherService { get; }
+
+        ILanguageService LanguageService { get; }
     }
 }
