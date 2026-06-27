@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class BorrowingTransaction : BaseEntity
+    public class BorrowingTransaction : BaseEntity, IHasName
     {
 
         public int BookId { get; set; }
@@ -23,5 +23,6 @@ namespace Domain.Models
         public DateTime BorrowDate { get; set; } = DateTime.UtcNow;
         public DateTime DueDate { get; set; }
         public DateTime? ReturnDate { get; set; }
+        public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

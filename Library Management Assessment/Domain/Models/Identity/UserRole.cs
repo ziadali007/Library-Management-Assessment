@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace Domain.Models.Identity
 {
-    public class UserRoles
+    public static class UserRole
     {
         public const string Admin = "Admin";
         public const string Librarian = "Librarian";
         public const string Staff = "Staff";
+        public const string Member = "Member";
+
     }
 }
