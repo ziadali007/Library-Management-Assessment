@@ -10,8 +10,9 @@ namespace Domain.Contracts
 {
     public interface IGenericRepository<T> where T : BaseEntity, IHasName
     {
+        IQueryable<T> AsQueryable();
         Task<IEnumerable<T>> GetAllAsync();
-        Task<T> FindByNameAsync(string name);
+        Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes);
         Task<T?> GetByIdAsync(int id);
 
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
