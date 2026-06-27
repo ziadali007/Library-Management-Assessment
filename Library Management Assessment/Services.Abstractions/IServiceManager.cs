@@ -19,5 +19,7 @@ namespace Services.Abstractions
         IPublisherService PublisherService { get; }
 
         ILanguageService LanguageService { get; }
+
+        IAuthService AuthService { get; }
     }
 }
