@@ -73,12 +73,12 @@ namespace Services
             return true;
         }
 
-        public async Task<bool> UpdateBookAsync(int bookId, UpdateBookDto bookDto)
+        public async Task<bool> UpdateBookAsync(UpdateBookDto bookDto)
         {
-           var existingBook = await unitOfWork.GetRepository<Book>().GetByIdAsync(bookId);
+           var existingBook = await unitOfWork.GetRepository<Book>().GetByIdAsync(bookDto.Id);
             if (existingBook == null)
             {
-                throw new KeyNotFoundException($"Book with ID {bookId} not found.");
+                throw new KeyNotFoundException($"Book with ID {bookDto.Id} not found.");
             }
 
            var book= mapper.Map(bookDto, existingBook);

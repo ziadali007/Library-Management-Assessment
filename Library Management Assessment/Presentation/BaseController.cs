@@ -11,6 +11,7 @@ namespace Presentation
 {
     public class BaseController(IServiceManager serviceManager) : ControllerBase
     {
+        #region Books Shared Endpoints
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookResultDto>>> GetAllBooks()
         {
@@ -34,6 +35,49 @@ namespace Presentation
 
             return Ok("Book successfully Borrowed.");
         }
+
+        #endregion
+
+        #region Categories Shared Endpoints
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<CategoryResultDto>>> GetAllCategories()
+        {
+            var categories = await serviceManager.CategoryService.GetAllCategoriesAsync();
+            return Ok(categories);
+        }
+
+        #endregion
+
+        #region Authors Shared Endpoints
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<AuthorResultDto>>> GetAllAuthors()
+        {
+            var authors = await serviceManager.AuthorService.GetAllAuthorsAsync();
+            return Ok(authors);
+        }
+
+        #endregion
+
+        #region Publishers Shared Endpoints
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<PublisherResultDto>>> GetAllPublishers()
+        {
+            var publishers = await serviceManager.PublisherService.GetAllPublishersAsync();
+            return Ok(publishers);
+        }
+        #endregion
+
+        #region Languages Shared Endpoints
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<PublisherResultDto>>> GetAllLanguages()
+        {
+            var Languages = await serviceManager.LanguageService.GetAllLanguagesAsync();
+            if (Languages == null)
+                return NotFound($"No Languages found.");
+            return Ok(Languages);
+        }
+        #endregion
 
     }
 }

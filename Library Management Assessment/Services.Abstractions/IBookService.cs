@@ -14,7 +14,7 @@ namespace Services.Abstractions
         Task<IEnumerable<BookResultDto>> SearchBooksAsync(BookSearchFilter filter);
         Task<bool> AddBookAsync(AddBookDto bookDto);
 
-        Task<bool> UpdateBookAsync(int bookId, UpdateBookDto bookDto);
+        Task<bool> UpdateBookAsync(UpdateBookDto bookDto);
         Task<bool> DeleteBookAsync(int bookId);
 
         Task<bool> BorrowBookAsync(BorrowBookDto dto);
