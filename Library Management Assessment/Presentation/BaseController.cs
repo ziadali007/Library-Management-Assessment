@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstractions;
 using Shared;
@@ -38,6 +39,13 @@ namespace Presentation
                 return BadRequest("Could not process book checkout. Verify book availability.");
 
             return Ok("Book successfully Borrowed.");
+        }
+
+        [HttpGet("status/{status}")]
+        public async Task<ActionResult<IEnumerable<BookResultDto>>> GetBooksByStatus(BookStatus status)
+        {
+            var books = await serviceManager.BookService.GetBooksByStatusAsync(status);
+            return Ok(books);
         }
 
         #endregion

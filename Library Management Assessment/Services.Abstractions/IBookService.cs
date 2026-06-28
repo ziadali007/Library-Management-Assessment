@@ -1,4 +1,5 @@
-﻿using Shared;
+﻿using Domain.Models;
+using Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace Services.Abstractions
         Task<IEnumerable<BookResultDto>> GetAllBooksAsync();
         Task<BookResultDto> GetBookByIdAsync(int bookId);
         Task<IEnumerable<BookResultDto>> SearchBooksAsync(BookSearchFilter filter);
+
+        Task<IEnumerable<BookResultDto>> GetBooksByStatusAsync(BookStatus status);
         Task<bool> AddBookAsync(AddBookDto bookDto);
 
         Task<bool> UpdateBookAsync(UpdateBookDto bookDto);

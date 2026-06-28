@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class BookService(ILibraryUnitOfWork unitOfWork,IMapper mapper) : IBookService
+    public class BookService(ILibraryUnitOfWork unitOfWork, IMapper mapper) : IBookService
     {
 
         public async Task<IEnumerable<BookResultDto>> SearchBooksAsync(BookSearchFilter filter)
@@ -166,6 +166,20 @@ namespace Services
 
             var result = await unitOfWork.SaveChangesAsync();
             return result > 0;
+        }
+
+        public async Task<IEnumerable<BookResultDto>> GetBooksByStatusAsync(BookStatus status)
+        {
+            var books= await unitOfWork.GetRepository<Book>().AsQueryable()
+            .Include(b => b.Language)
+            .Include(b => b.Authors)
+            .Include(b => b.Categories)
+            .Where(b => b.Status == status)
+            .ToListAsync();
+
+            return mapper.Map<IEnumerable<BookResultDto>>(books);
+
+
         }
     }
 }
