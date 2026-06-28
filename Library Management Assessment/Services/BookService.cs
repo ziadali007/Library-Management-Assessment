@@ -20,9 +20,9 @@ namespace Services
             var bookRepository = unitOfWork.GetRepository<Book>();
             IQueryable<Book> query = bookRepository.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(filter.Name))
+            if (!string.IsNullOrWhiteSpace(filter.Title))
             {
-                query = query.Where(b => b.Title.Contains(filter.Name));
+                query = query.Where(b => b.Title.Contains(filter.Title));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Author))

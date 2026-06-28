@@ -14,6 +14,6 @@ namespace Shared
 
         public string? Biography { get; set; }
 
-        public ICollection<string> Books { get; set; } = new HashSet<string>();
+        public ICollection<string>? Books { get; set; } = new HashSet<string>();
     }
 }

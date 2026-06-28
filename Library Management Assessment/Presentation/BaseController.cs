@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.Abstractions;
 using Shared;
 using System;
@@ -11,6 +12,7 @@ namespace Presentation
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class BaseController(IServiceManager serviceManager) : ControllerBase
     {
         #region Books Shared Endpoints
@@ -41,7 +43,7 @@ namespace Presentation
         #endregion
 
         #region Categories Shared Endpoints
-        [HttpGet]
+        [HttpGet("categories")]
         public async Task<ActionResult<IEnumerable<CategoryResultDto>>> GetAllCategories()
         {
             var categories = await serviceManager.CategoryService.GetAllCategoriesAsync();
@@ -51,7 +53,7 @@ namespace Presentation
         #endregion
 
         #region Authors Shared Endpoints
-        [HttpGet]
+        [HttpGet("authors")]
         public async Task<ActionResult<IEnumerable<AuthorResultDto>>> GetAllAuthors()
         {
             var authors = await serviceManager.AuthorService.GetAllAuthorsAsync();
@@ -61,7 +63,7 @@ namespace Presentation
         #endregion
 
         #region Publishers Shared Endpoints
-        [HttpGet]
+        [HttpGet("publishers")]
         public async Task<ActionResult<IEnumerable<PublisherResultDto>>> GetAllPublishers()
         {
             var publishers = await serviceManager.PublisherService.GetAllPublishersAsync();
@@ -71,7 +73,7 @@ namespace Presentation
 
         #region Languages Shared Endpoints
 
-        [HttpGet]
+        [HttpGet("languages")]
         public async Task<ActionResult<IEnumerable<PublisherResultDto>>> GetAllLanguages()
         {
             var Languages = await serviceManager.LanguageService.GetAllLanguagesAsync();

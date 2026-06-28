@@ -22,6 +22,8 @@ namespace Services
         {
             var user = new AppUser
             {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
                 UserName = model.Email,
                 Email = model.Email
             };
@@ -31,6 +33,19 @@ namespace Services
             if (!result.Succeeded) return result;
 
             return await _userManager.AddToRoleAsync(user, role);
+        }
+
+        public async Task<bool> DeleteUserByEmailAsync(DeleteUserByEmailDto dto)
+        {
+            var user = await _userManager.FindByEmailAsync(dto.Email);
+            if (user == null)
+            {
+                return false; 
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+
+            return result.Succeeded;
         }
     }
 }

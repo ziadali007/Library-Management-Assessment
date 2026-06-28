@@ -16,7 +16,7 @@ namespace Services.Profiles
             CreateMap<Language, LanguageResultDto>()
                 .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.Books.Select(b => b.Title)));
             CreateMap<AddLanguageDto, Language>()
-                .ForMember(dest => dest.Books, opt => opt.Ignore());
+                .ForMember(dest => dest.Books, opt => opt.Ignore()).ReverseMap();
 
 
 

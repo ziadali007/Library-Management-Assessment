@@ -16,7 +16,8 @@ namespace Services.Profiles
             CreateMap<Publisher, PublisherResultDto>()
                 .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.Books.Select(b => b.Title)));
             CreateMap<AddPublisherDto, Publisher>()
-                .ForMember(dest => dest.Books, opt => opt.Ignore());
+                .ForMember(dest => dest.Books, opt => opt.Ignore())
+                .ReverseMap();
         }
     }
 }

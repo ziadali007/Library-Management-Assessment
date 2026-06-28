@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,11 @@ namespace Domain.Models
         public ICollection<Author> Authors { get; set; } = new HashSet<Author>();
         public ICollection<Category> Categories { get; set; } = new HashSet<Category>();
         public ICollection<BorrowingTransaction> BorrowingTransactions { get; set; } = new HashSet<BorrowingTransaction>();
-        public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        [NotMapped]
+        public string Name
+        {
+            get => Title;
+            set => Title = value ?? string.Empty;
+        }
     }
 }

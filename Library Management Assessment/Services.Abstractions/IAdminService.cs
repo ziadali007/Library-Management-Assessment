@@ -11,5 +11,6 @@ namespace Services.Abstractions
     public interface IAdminService
     {
         Task<IdentityResult> CreateUserWithRoleAsync(CreateUserDto model, string role);
+        Task<bool> DeleteUserByEmailAsync(DeleteUserByEmailDto dto);
     }
 }

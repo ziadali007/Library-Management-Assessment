@@ -15,8 +15,9 @@ namespace Services.Profiles
         {
             CreateMap<Category, CategoryResultDto>()
                 .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.Books.Select(b => b.Title).ToList()))
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Name))
                 .ReverseMap();
-            CreateMap<Category, AddCategoryDto>().ReverseMap();
+            CreateMap<Category, AddCategoryDto>().ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Name)).ReverseMap();
         }
     }
 }
