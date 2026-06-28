@@ -16,7 +16,8 @@ namespace Services.Profiles
             CreateMap<Author, AuthorResultDto>()
                 .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.Books.Select(b => b.Title)));
             CreateMap<AddAuthorDto, Author>()
-                .ForMember(dest => dest.Books, opt => opt.Ignore());
+         .ForMember(dest => dest.Books, opt => opt.Ignore())
+         .ReverseMap();
         }
     }
 }

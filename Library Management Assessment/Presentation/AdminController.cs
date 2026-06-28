@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Presentation
 {
     [ApiController]
-    [Route("api/admin/books")]
+    [Route("api/admin")]
     [Authorize(Roles = $"{UserRole.Admin},{UserRole.Librarian}")]
     public class AdminController : BaseController
     {
@@ -52,6 +52,22 @@ namespace Presentation
 
             return Ok("Staff created successfully.");
         }
+
+        [HttpPost("delete-user")]
+        [Authorize(Roles = $"{UserRole.Admin}")]
+        public async Task<IActionResult> DeleteUser([FromBody] DeleteUserByEmailDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var success = await serviceManager.AdminService.DeleteUserByEmailAsync(dto);
+            if (!success)
+            {
+                return BadRequest("Could not delete user. The account may not exist, or a system failure occurred.");
+            }
+
+            return Ok($"User account associated with '{dto.Email}' has been permanently deleted.");
+        }
         #endregion
 
         #region Book management
@@ -70,7 +86,7 @@ namespace Presentation
             }
         }
 
-        [HttpPost]
+        [HttpPost("CreateBook")]
         public async Task<IActionResult> CreateBook([FromBody] AddBookDto dto)
         {
             if (!ModelState.IsValid)

@@ -12,7 +12,12 @@ namespace Presistence.Repositories
     public class LibraryUnitOfWork : ILibraryUnitOfWork
     {
         private readonly LibraryDbContext _libraryDb;
-        private readonly ConcurrentDictionary<Type, object> _repositories;
+        private readonly ConcurrentDictionary<Type, object> _repositories = new ConcurrentDictionary<Type, object>();
+        public LibraryUnitOfWork(LibraryDbContext libraryDb)
+        {
+            _libraryDb = libraryDb;
+            _repositories = new ConcurrentDictionary<Type, object>();
+        }
         public IGenericRepository<T> GetRepository<T>() where T : BaseEntity, IHasName
         {
             return (IGenericRepository<T>)_repositories.GetOrAdd(typeof(T), (type) => new LibraryGenericRepository<T>(_libraryDb));
